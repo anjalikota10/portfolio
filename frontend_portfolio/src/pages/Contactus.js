@@ -8,6 +8,7 @@ import Header from './Header';
 import Footer from './Footer';
 import axios from 'axios';
 import { useState,useEffect } from 'react';
+import  {API_URL} from "./config";
 const Contactus = () => {
 
 const [fname,setfname]=useState("");
@@ -24,7 +25,7 @@ function handleClick(){
     }
     console.log(data)
 
-  axios.post("http://127.0.0.1:8000/api/contact",data)
+axios.post(`${API_URL}/api/contact`, data)
   .then(res=>{
     alert('Contacted');
     window.location('contactus');
