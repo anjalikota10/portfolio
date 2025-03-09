@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend_portfolio
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"  # Expose React on HTTP
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend_portfolio
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"  # Expose Laravel API
+    depends_on:
+      - mysql
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=portfolio
+      - DB_USERNAME=root
+      - DB_PASSWORD=vertex123
+
+  mysql:
+    image: mysql:8
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_DATABASE: portfolio
+      MYSQL_ROOT_PASSWORD: vertex123
+    ports:
+      - "3306:3306"  # Optional if needed externally
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
+
